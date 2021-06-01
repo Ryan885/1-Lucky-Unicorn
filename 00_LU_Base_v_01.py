@@ -44,6 +44,18 @@ def num_check(question, low, high):
         except ValueError:
             print(error)
 
+def statement_generator(statement, decoration):
+
+    sides = decoration * 3
+    statement = "{} {} {}".format(sides, statement, sides)
+    top_bottom = decoration * len(statement)
+
+    print(top_bottom)
+    print(statement)
+    print(top_bottom)
+
+    return ""
+
 
 # Main Routine Below
 played_before = yes_no("Have you played the game before? ")
@@ -52,13 +64,10 @@ if played_before == "no":
     instructions()
 
 print("Program Continues")
-
 print()
 
 # Ask user how much they want to play with...
 how_much = num_check("How much would you like to play with?", 0, 10)
-
-
 
 # set balance for testing purposes
 balance = how_much
@@ -81,12 +90,14 @@ while play_again == "":
     # user gets a unicorn (add $4 to balance)
     if 1 <= chosen_num <=5:
         chosen = "unicorn"
+        prize_decoration = "!"
         balance += 4
 
     # if the random # is between 6 and 36,
     # user gets a donkey (subtract 1 from balance)
     elif 6 <= chosen_num <= 36:
         chosen = "donkey"
+        prize_decoration = "D"
         balance -= 1
 
     # The token is either a horse or zebra...
@@ -96,13 +107,15 @@ while play_again == "":
         # item to a horse
         if chosen_num % 2 == 0:
             chosen = "horse"
-
+            prize_decoration = "H"
         # otherwise set it to a zebra
         else:
             chosen = "zebra"
+            prize_decoration = "Z"
         balance -= 0.5
 
-    print("You got a {}. Your balance is ${:.2f}".format(chosen, balance))
+    outcome = ("You got a {}. Your balance is ${:.2f}".format(chosen, balance))
+    statement_generator(outcome, prize_decoration)
 
     if balance < 1:
         # If balance is too low, exit the game and output a suitable message
